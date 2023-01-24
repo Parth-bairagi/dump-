@@ -32,3 +32,31 @@ export class AppComponent  {
     console.log(this.selectedOption);
   }
 }
+
+
+
+
+
+
+
+<select (change)="showDiv($event.target.value)">
+  <option *ngFor="let option of options" [value]="option.id">{{ option.name }}</option>
+</select>
+<div *ngFor="let option of options">
+  <div [id]="option.id" *ngIf="selected === option.id">{{ option.content }}</div>
+</div>
+
+
+
+export class MyComponent {
+  options = [
+    { id: 'option1', name: 'Option 1', content: 'Option 1 content' },
+    { id: 'option2', name: 'Option 2', content: 'Option 2 content' },
+    { id: 'option3', name: 'Option 3', content: 'Option 3 content' }
+  ];
+  selected: string;
+
+  showDiv(id: string) {
+    this.selected = id;
+  }
+}

@@ -106,3 +106,53 @@ export class MyComponent {
   <input type="text" placeholder="Option 5 form input">
   <button type="submit">Submit</button>
 </form>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+      $scope.divs = [
+        {name: 'Div 1', value: 'div1'},
+        {name: 'Div 2', value: 'div2'},
+        {name: 'Div 3', value: 'div3'},
+        {name: 'Div 4', value: 'div4'}
+      ];
+      $scope.selectedDiv = $scope.divs[0].value;
+    });
+  </script>
+</head>
+<body ng-controller="myCtrl">
+  <select ng-model="selectedDiv" ng-options="div.value as div.name for div in divs"></select>
+  <div ng-show="selectedDiv == 'div1'">
+    <form>
+      <!-- form elements for div 1 -->
+    </form>
+  </div>
+  <div ng-show="selectedDiv == 'div2'">
+    <form>
+      <!-- form elements for div 2 -->
+    </form>
+  </div>
+  <div ng-show="selectedDiv == 'div3'">
+    <form>
+      <!-- form elements for div 3 -->
+    </form>
+  </div>
+  <div ng-show="selectedDiv == 'div4'">
+    <form>
+      <!-- form elements for div 4 -->
+    </form>
+  </div>
+</body>
+</html>
+
+

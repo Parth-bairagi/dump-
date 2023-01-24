@@ -1,0 +1,34 @@
+<div class="form-group">
+  <label for="exampleSelect1">Select an option:</label>
+  <select [(ngModel)]="selectedOption" (ngModelChange)="onOptionSelected()" class="form-control" id="exampleSelect1">
+    <option *ngFor="let option of options" [value]="option.value">{{ option.name }}</option>
+  </select>
+</div>
+
+<div *ngIf="selectedOption === 'option1'">
+  <p>Content for option 1</p>
+</div>
+<div *ngIf="selectedOption === 'option2'">
+  <p>Content for option 2</p>
+</div>
+
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
+})
+export class AppComponent  {
+  selectedOption: string;
+  options = [
+    { name: 'Option 1', value: 'option1' },
+    { name: 'Option 2', value: 'option2' },
+  ];
+
+  onOptionSelected() {
+    console.log(this.selectedOption);
+  }
+}

@@ -176,3 +176,79 @@ export class MyComponent {
 </html>
 
 
+
+
+Newwww
+
+<form [formGroup]="addressForm">
+  <div>
+    <label>Current Address:</label>
+    <input formControlName="currentAddress">
+  </div>
+  <div>
+    <label>City:</label>
+    <input formControlName="currentCity">
+  </div>
+  <div>
+    <label>State:</label>
+    <input formControlName="currentState">
+  </div>
+  <div>
+    <label>Permanent Address:</label>
+    <input formControlName="permanentAddress">
+  </div>
+  <div>
+    <label>City:</label>
+    <input formControlName="permanentCity">
+  </div>
+  <div>
+    <label>State:</label>
+    <input formControlName="permanentState">
+  </div>
+  <div>
+    <label>
+      <input type="checkbox" (change)="copyCurrentAddress()">
+      Same as Current Address
+    </label>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+
+
+
+Ts
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+export class AddressFormComponent {
+  addressForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.addressForm = this.fb.group({
+      currentAddress: [''],
+      currentCity: [''],
+      currentState: [''],
+      permanentAddress: [''],
+      permanentCity: [''],
+      permanentState: [''],
+    });
+  }
+
+  copyCurrentAddress() {
+    if (this.addressForm.value.sameAsCurrent) {
+      this.addressForm.patchValue({
+        permanentAddress: this.addressForm.value.currentAddress,
+        permanentCity: this.addressForm.value.currentCity,
+        permanentState: this.addressForm.value.currentState,
+      });
+    } else {
+      this.addressForm.patchValue({
+        permanentAddress: '',
+        permanentCity: '',
+        permanentState: '',
+      });
+    }
+  }
+}
+
+
+

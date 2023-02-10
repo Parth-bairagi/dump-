@@ -132,3 +132,43 @@ function arrayBufferToBase64(arrayBuffer) {
     const uint8Array = new Uint8Array(arrayBuffer);
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result.split(","
+
+
+
+
+
+
+New
+
+
+<button id="startButton">Start</button>
+<select id="languageSelect">
+  <option value="hi-IN">Hindi</option>
+  <option value="ta-IN">Tamil</option>
+  <option value="te-IN">Telugu</option>
+  <!-- Add other Indian language options here -->
+</select>
+
+<script>
+  const startButton = document.querySelector("#startButton");
+  const languageSelect = document.querySelector("#languageSelect");
+
+  const speechSynthesis = window.speechSynthesis;
+
+  startButton.addEventListener("click", function() {
+    const selectedLanguage = languageSelect.value;
+    const utterance = new SpeechSynthesisUtterance("Hello, how are you?");
+    utterance.lang = selectedLanguage;
+    speechSynthesis.speak(utterance);
+  });
+</script>
+In this example, we have a start button and a select element for selecting the language. The speechSynthesis object from the Web Speech API is used to convert the text "Hello, how are you?" into speech. The language for the speech is set using the lang property on the SpeechSynthesisUtterance object, which is set to the selected language from the select element.
+
+This is just a basic example, you can modify it to meet your specific requirements.
+
+
+
+
+
+
+ChatGPT Jan 30 Version. Free Research Preview. Our goal is to make AI systems more natural and safe to interact with. Your feedback will 

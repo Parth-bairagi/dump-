@@ -1,0 +1,85 @@
+<!-- navbar.component.html -->
+
+<mat-toolbar color="primary">
+  <button mat-icon-button class="menu-button">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="app-name">My App</span>
+  <span class="spacer"></span>
+  <mat-form-field appearance="outline">
+    <mat-label>Branch</mat-label>
+    <mat-select [(ngModel)]="selectedBranch">
+      <mat-option value="1000">1000</mat-option>
+      <mat-option value="2000">2000</mat-option>
+      <mat-option value="3000">3000</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Role</mat-label>
+    <mat-select [(ngModel)]="selectedRole">
+      <mat-option value="admin">Admin</mat-option>
+      <mat-option value="user">User</mat-option>
+      <mat-option value="guest">Guest</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-icon-button class="notification-button">
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button class="profile-button">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+
+
+// navbar.component.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
+})
+export class NavbarComponent {
+  selectedBranch = '1000';
+  selectedRole = 'admin';
+}
+
+
+
+/* navbar.component.css */
+
+.menu-button,
+.notification-button,
+.profile-button {
+  margin-right: 16px;
+}
+
+.app-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.mat-form-field {
+  margin-right: 16px;
+}
+
+.mat-select-arrow {
+  color: white;
+}
+
+.mat-option-text {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.notification-button .mat-icon,
+.profile-button .mat-icon {
+  font-size: 24px;
+}
+

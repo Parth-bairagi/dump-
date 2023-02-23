@@ -1,0 +1,64 @@
+<!-- sidenav.component.html -->
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="{{ mode }}">
+    <!-- menu items here -->
+  </mat-sidenav>
+</mat-sidenav-container>
+
+<button mat-icon-button class="orientation-toggle" (click)="toggleOrientation()">
+  <mat-icon>{{ mode === 'side' ? 'horizontal_split' : 'vertical_split' }}</mat-icon>
+</button>
+
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-sidenav',
+  templateUrl: './sidenav.component.html',
+  styleUrls: ['./sidenav.component.css']
+})
+export class SidenavComponent {
+  mode = 'side';
+
+  toggleOrientation() {
+    this.mode = this.mode === 'side' ? 'over' : 'side';
+  }
+}
+
+
+
+<!-- app.component.html -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav #sidenav mode="{{ mode }}">
+          <mat-nav-list>
+            <mat-list-item routerLink="/" routerLinkActive="active-link" (click)="sidenav.toggle()">
+              <mat-icon>dashboard</mat-icon>
+              <span>Dashboard</span>
+            </mat-list-item>
+            <mat-list-item routerLink="/business-partner" routerLinkActive="active-link" (click)="sidenav.toggle()">
+              <mat-icon>business</mat-icon>
+              <span>Business Partner</span>
+            </mat-list-item>
+            <mat-list-item routerLink="/party" routerLinkActive="active-link" (click)="sidenav.toggle()">
+              <mat-icon>people</mat-icon>
+              <span>Party</span>
+            </mat-list-item>
+            <mat-list-item routerLink="/settings" routerLinkActive="active-link" (click)="sidenav.toggle()">
+              <mat-icon>settings</mat-icon>
+              <span>Settings</span>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-sidenav>
+      </mat-sidenav-container>
+    </div>
+    <div class="col-md-9">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

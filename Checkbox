@@ -1,0 +1,92 @@
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+  <label>Address Line 1</label>
+  <input type="text" formControlName="addressLine1">
+
+  <label>Address Line 2</label>
+  <input type="text" formControlName="addressLine2">
+
+  <label>City</label>
+  <input type="text" formControlName="city">
+
+  <label>State</label>
+  <input type="text" formControlName="state">
+
+  <div>
+    <input type="checkbox" [(ngModel)]="copyAddress" (change)="copyToTempAddress()"> 
+    <label>Copy Address to Temporary Address?</label>
+  </div>
+
+  <div *ngIf="copyAddress">
+    <label>Temporary Address Line 1</label>
+    <input type="text" formControlName="tempAddressLine1">
+
+    <label>Temporary Address Line 2</label>
+    <input type="text" formControlName="tempAddressLine2">
+
+    <label>Temporary City</label>
+    <input type="text" formControlName="tempCity">
+
+    <label>Temporary State</label>
+    <input type="text" formControlName="tempState">
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+
+
+
+
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-address-form',
+  templateUrl: './address-form.component.html',
+  styleUrls: ['./address-form.component.css']
+})
+export class AddressFormComponent {
+
+  addressForm: FormGroup;
+  copyAddress: boolean = false;
+
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.addressForm = this.fb.group({
+      addressLine1: [''],
+      addressLine2: [''],
+      city: [''],
+      state: [''],
+      tempAddressLine1: [''],
+      tempAddressLine2: [''],
+      tempCity: [''],
+      tempState: ['']
+    });
+  }
+
+  onSubmit() {
+    console.log(this.addressForm.value);
+  }
+
+  copyToTempAddress() {
+    if (this.copyAddress) {
+      this.addressForm.patchValue({
+        tempAddressLine1: this.addressForm.value.addressLine1,
+        tempAddressLine2: this.addressForm.value.addressLine2,
+        tempCity: this.addressForm.value.city,
+        tempState: this.addressForm.value.state
+      });
+    } else {
+      this.addressForm.patchValue({
+        tempAddressLine1: '',
+        tempAddressLine2: '',
+        tempCity: '',
+        tempState: ''
+      });
+    }
+  }
+
+}

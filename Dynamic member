@@ -1,0 +1,67 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-family-form',
+  templateUrl: './family-form.component.html',
+  styleUrls: ['./family-form.component.css']
+})
+export class FamilyFormComponent implements OnInit {
+  familyForm: FormGroup;
+  familyMembers: FormArray;
+
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit() {
+    this.familyForm = this.fb.group({
+      numberOfMembers: new FormControl(),
+      members: this.fb.array([])
+    });
+  }
+
+  onNumberOfMembersChange() {
+    const numberOfMembers = this.familyForm.get('numberOfMembers').value;
+    this.familyMembers = this.familyForm.get('members') as FormArray;
+    this.familyMembers.clear();
+    for (let i = 0; i < numberOfMembers; i++) {
+      const member = this.fb.group({
+        name: new FormControl(''),
+        age: new FormControl(''),
+        gender: new FormControl(''),
+        relationship: new FormControl('')
+      });
+      this.familyMembers.push(member);
+    }
+  }
+
+  onSubmit() {
+    console.log(this.familyForm.value);
+  }
+}
+
+<form [formGroup]="familyForm" (ngSubmit)="onSubmit()">
+  <label for="numberOfMembers">Number of Family Members:</label>
+  <input type="number" formControlName="numberOfMembers" (change)="onNumberOfMembersChange()" />
+
+  <div *ngFor="let member of familyMembers.controls; let i=index">
+    <h3>Family Member {{i + 1}}</h3>
+    <label for="name">Name:</label>
+    <input type="text" formControlName="name" />
+
+    <label for="age">Age:</label>
+    <input type="number" formControlName="age" />
+
+    <label for="gender">Gender:</label>
+    <select formControlName="gender">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+
+    <label for="relationship">Relationship:</label>
+    <input type="text" formControlName="relationship" />
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+

@@ -1,0 +1,68 @@
+<form>
+  <label for="id">ID:</label>
+  <input type="text" id="id" name="id" [(ngModel)]="id">
+
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" [(ngModel)]="name">
+
+  <button type="submit" (click)="search()">Search</button>
+</form>
+
+<ul *ngIf="results.length">
+  <li *ngFor="let result of results">
+    {{ result.id }} - {{ result.name }}
+  </li>
+</ul>
+
+
+
+
+Ts
+
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Component({
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+})
+export class SearchComponent {
+  id: string;
+  name: string;
+  results: any[];
+
+  constructor(private http: HttpClient) {}
+
+  search() {
+    const params = {};
+    if (this.id) {
+      params['id'] = this.id;
+    }
+    if (this.name) {
+      params['name'] = this.name;
+    }
+
+    this.http.get<any[]>('https://example.com/api/search', { params }).subscribe((data: any[]) => {
+      this.results = data;
+    });
+  }
+}
+
+
+
+App module ts
+
+import { HttpClientModule } from '@angular/common/http';
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+  ],
+  declarations: [
+    AppComponent,
+    SearchComponent,
+  ],
+  bootstrap: [AppComponent],
+})
+export class AppModule { }

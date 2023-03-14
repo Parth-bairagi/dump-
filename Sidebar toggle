@@ -1,0 +1,59 @@
+import { Component, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
+})
+export class SidebarComponent {
+  @Output() toggle = new EventEmitter<boolean>();
+
+  onToggle() {
+    this.toggle.emit(true);
+  }
+}
+
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.partial-width {
+  width: calc(100% - 200px); /* Adjust 200px to match the width of your sidebar */
+}
+
+Home 
+export class MainPanelComponent {
+  @Input() sidebarVisible: boolean;
+}
+
+<div [ngClass]="{'full-width': !sidebarVisible, 'partial-width': sidebarVisible}">
+  <!-- Contents of main panel -->
+</div>
+
+
+Sidebar
+<button (click)="toggleSidebar()">Toggle Sidebar</button>
+<div *ngIf="sidebarVisible">
+  <!-- Contents of sidebar -->
+</div>
+
+export class SidebarComponent {
+  @Output() toggle = new EventEmitter<boolean>();
+  sidebarVisible = true;
+
+  toggleSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
+    this.toggle.emit(this.sidebarVisible);
+  }
+}
+
+
+
+
+

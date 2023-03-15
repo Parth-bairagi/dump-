@@ -1,0 +1,56 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.css']
+})
+export class FormComponent implements OnInit {
+  
+  myForm: FormGroup;
+  
+  constructor(private fb: FormBuilder) { }
+  
+  ngOnInit() {
+    this.myForm = this.fb.group({
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      permanentAddressLine1: ['', Validators.required],
+      permanentAddressLine2: ['', Validators.required],
+      permanentCity: ['', Validators.required],
+      permanentState: ['', Validators.required],
+      permanentZipcode: ['', Validators.required],
+      isMailingSameAsPermanent: [false],
+      mailingAddressLine1: [''],
+      mailingAddressLine2: [''],
+      mailingCity: [''],
+      mailingState: [''],
+      mailingZipcode: ['']
+    });
+    
+    // subscribe to value changes of checkbox control
+    this.myForm.controls['isMailingSameAsPermanent'].valueChanges.subscribe(value => {
+      if (value) {
+        // set mailing address values to permanent address values
+        this.myForm.controls['mailingAddressLine1'].setValue(this.myForm.controls['permanentAddressLine1'].value);
+        this.myForm.controls['mailingAddressLine2'].setValue(this.myForm.controls['permanentAddressLine2'].value);
+        this.myForm.controls['mailingCity'].setValue(this.myForm.controls['permanentCity'].value);
+        this.myForm.controls['mailingState'].setValue(this.myForm.controls['permanentState'].value);
+        this.myForm.controls['mailingZipcode'].setValue(this.myForm.controls['permanentZipcode'].value);
+      } else {
+        // clear mailing address values
+        this.myForm.controls['mailingAddressLine1'].setValue('');
+        this.myForm.controls['mailingAddressLine2'].setValue('');
+        this.myForm.controls['mailingCity'].setValue('');
+        this.myForm.controls['mailingState'].setValue('');
+        this.myForm.controls['mailingZipcode'].setValue('');
+      }
+    });
+  }
+  
+  onSubmit() {
+    // handle form submission
+  }
+
+}

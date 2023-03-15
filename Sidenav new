@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="row">
+    <app-sidebar [showSidebar]="showSidebar" (toggle)="toggleSidebar()"></app-sidebar>
+    <div class="col-sm-12 col-md-9 main-panel" [ngStyle]="{'width': showSidebar ? 'calc(100% - 250px)' : '100%'}">
+      <app-navbar *ngIf="!showSidebar" [links]="links"></app-navbar>
+      <app-mainpanel></app-mainpanel>
+    </div>
+  </div>
+</div>
+
+
+
+export class ParentComponent {
+  showSidebar = true;
+  links = [
+    { path: '/page1', label: 'Page 1' },
+    { path: '/page2', label: 'Page 2' },
+    { path: '/page3', label: 'Page 3' }
+  ];
+
+  toggleSidebar() {
+    this.showSidebar = !this.showSidebar;
+  }
+}
+
+
+<div class="sidebar" [ngClass]="{'col-sm-3': showSidebar, 'hidden': !showSidebar}">
+  <!-- Sidebar content goes here -->
+  <button (click)="toggle.emit()">Toggle Sidebar</button>
+</div>
+
+
+export class SidebarComponent {
+  @Input() showSidebar = true;
+  @Output() toggle = new EventEmitter<void>();
+}
+

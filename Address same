@@ -54,3 +54,70 @@ export class FormComponent implements OnInit {
   }
 
 }
+
+
+
+
+import { Component } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-address-form',
+  templateUrl: './address-form.component.html',
+  styleUrls: ['./address-form.component.css']
+})
+export class AddressFormComponent {
+  addressForm: FormGroup;
+  
+  constructor() {
+    this.addressForm = new FormGroup({
+      permanentAddress: new FormGroup({
+        street: new FormControl(''),
+        city: new FormControl(''),
+        state: new FormControl(''),
+        zip: new FormControl('')
+      }),
+      mailingAddress: new FormGroup({
+        street: new FormControl({value: '', disabled: true}),
+        city: new FormControl({value: '', disabled: true}),
+        state: new FormControl({value: '', disabled: true}),
+        zip: new FormControl({value: '', disabled: true})
+      }),
+      enableMailingAddress: new FormControl(false)
+    });
+  }
+}
+
+
+
+<form [formGroup]="addressForm">
+  <div formGroupName="permanentAddress">
+    <h2>Permanent Address</h2>
+    <label>Street:</label>
+    <input type="text" formControlName="street">
+    <label>City:</label>
+    <input type="text" formControlName="city">
+    <label>State:</label>
+    <input type="text" formControlName="state">
+    <label>Zip:</label>
+    <input type="text" formControlName="zip">
+  </div>
+  <div>
+    <label>
+      <input type="checkbox" formControlName="enableMailingAddress"> 
+      Enable Mailing Address
+    </label>
+  </div>
+  <div formGroupName="mailingAddress">
+    <h2>Mailing Address</h2>
+    <label>Street:</label>
+    <input type="text" formControlName="street" [disabled]="!addressForm.get('enableMailingAddress').value">
+    <label>City:</label>
+    <input type="text" formControlName="city" [disabled]="!addressForm.get('enableMailingAddress').value">
+    <label>State:</label>
+    <input type="text" formControlName="state" [disabled]="!addressForm.get('enableMailingAddress').value">
+    <label>Zip:</label>
+    <input type="text" formControlName="zip" [disabled]="!addressForm.get('enableMailingAddress').value">
+  </div>
+</form>
+
